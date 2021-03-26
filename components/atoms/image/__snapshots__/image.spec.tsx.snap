@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ui.atoms.Image should be rendered correctly 1`] = `
+<DocumentFragment>
+  <span
+    class=" lazy-load-image-background opacity"
+    style="display: inline-block; height: auto; width: auto;"
+  >
+    <img
+      alt="..."
+      class="image makeStyles-root-1 makeStyles-dBlock-2"
+      height="auto"
+      src="https://cdn.watheia.org/assets/icon.png"
+      width="auto"
+    />
+  </span>
+</DocumentFragment>
+`;

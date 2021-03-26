@@ -1,0 +1,7 @@
+.cache/
+.yarn/
+yarn.lock/
+node_modules/
+out/
+coverage/
+.next/
