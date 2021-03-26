@@ -1,7 +1,6 @@
 import Head from "next/head"
 import React from "react"
 
-
 // ensure font is available
 // import "@fontsource/roboto-slab"
 
@@ -58,7 +57,6 @@ export const TopLayout: React.FC<TopLayoutProps> = ({
   locale = "en_US",
   imageUrl = "https://cdn.watheia.org/assets/logo-modern-light.svg",
 }): JSX.Element => {
-
   return (
     <>
       <Head>

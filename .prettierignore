@@ -1,7 +1,7 @@
-.cache/
-.yarn/
-yarn.lock/
 node_modules/
 out/
-coverage/
 .next/
+yarn.lock
+package-lock.json
+public/
+coverage/
