@@ -4,6 +4,7 @@ import { AppProps } from "next/app"
 import { ThemeProvider } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import withPalette from "components/brand/theme"
+import "sass/main.scss"
 
 const theme = withPalette("light")
 

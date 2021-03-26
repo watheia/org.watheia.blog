@@ -16,8 +16,8 @@ export default class Body extends React.Component {
             {_.get(this.props, "page.frontmatter.seo.title", null)
               ? _.get(this.props, "page.frontmatter.seo.title", null)
               : _.get(this.props, "page.frontmatter.title", null) +
-                " | " +
-                _.get(this.props, "data.config.title", null)}
+              " | " +
+              _.get(this.props, "data.config.title", null)}
           </title>
           <meta charSet="utf-8" />
           <meta name="viewport" content="width=device-width, initialScale=1.0" />
@@ -38,25 +38,25 @@ export default class Body extends React.Component {
               let key_name = _.get(meta, "keyName", null) || "name"
               return _.get(meta, "relativeUrl", null) ? (
                 _.get(this.props, "data.config.domain", null) &&
-                  (() => {
-                    let domain = _.trim(_.get(this.props, "data.config.domain", null), "/")
-                    let rel_url = withPrefix(_.get(meta, "value", null))
-                    let full_url = domain + rel_url
-                    return (
-                      <meta
-                        key={meta_idx}
-                        {...attribute(key_name, _.get(meta, "name", null))}
-                        content={full_url}
-                      />
-                    )
-                  })()
+                (() => {
+                  let domain = _.trim(_.get(this.props, "data.config.domain", null), "/")
+                  let rel_url = withPrefix(_.get(meta, "value", null))
+                  let full_url = domain + rel_url
+                  return (
+                    <meta
+                      key={meta_idx}
+                      {...attribute(key_name, _.get(meta, "name", null))}
+                      content={full_url}
+                    />
+                  )
+                })()
               ) : (
-                <meta
-                  key={meta_idx + ".1"}
-                  {...attribute(key_name, _.get(meta, "name", null))}
-                  content={_.get(meta, "value", null)}
-                />
-              )
+                  <meta
+                    key={meta_idx + ".1"}
+                    {...attribute(key_name, _.get(meta, "name", null))}
+                    content={_.get(meta, "value", null)}
+                  />
+                )
             },
           )}
           {font !== "system-sans" && (
@@ -64,17 +64,17 @@ export default class Body extends React.Component {
           )}
           {font === "fraunces" ? (
             <link
-              href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;1,400;1,500&display=swap"
+              href="https://fonts.googleapis.com/css2?family=Roboto+Slab:ital,wght@0,400;0,500;1,400;1,500&display=swap"
               rel="stylesheet"
             />
           ) : (
-            font === "karla" && (
-              <link
-                href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-                rel="stylesheet"
-              />
-            )
-          )}
+              font === "karla" && (
+                <link
+                  href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+                  rel="stylesheet"
+                />
+              )
+            )}
           {_.get(this.props, "data.config.favicon", null) && (
             <link
               rel="icon"

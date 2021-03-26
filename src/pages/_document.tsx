@@ -1,24 +1,47 @@
-import React from "react"
 import Document, { Html, Head, Main, NextScript } from "next/document"
-import { ServerStyleSheets } from "@material-ui/core/styles"
-import withPalette from "components/brand/theme"
+import { Helmet } from "react-helmet"
+import ScriptTag from "react-script-tag"
+import { withPrefix } from "../utils"
+import _ from "lodash"
 
-const theme = withPalette("light")
+type Props = {
+  helmet: Helmet
+}
+class MyDocument extends Document {
 
-export default class MyDocument extends Document {
+  static async getInitialProps(ctx) {
+    const initialProps = await Document.getInitialProps(ctx)
+    // see https://github.com/nfl/react-helmet#server-usage for more information
+    // 'head' was occupied by 'renderPage().head', we cannot use it
+    return { ...initialProps, helmet: Helmet.renderStatic() }
+  }
+
+  // should render on <html>
+  get helmetHtmlAttrComponents() {
+    return _.get(this.props, 'helmet.htmlAttributes').toComponent()
+  }
+
+  // should render on <body>
+  get helmetBodyAttrComponents() {
+    return _.get(this.props, "helmet.bodyAttributes").toComponent()
+  }
+
+  // should render on <head>
+  get helmetHeadComponents() {
+    return Object.keys(_.get(this.props, "helmet"))
+      .filter((el) => el !== "htmlAttributes" && el !== "bodyAttributes")
+      .map((el) => _.get(this.props, "helmet")[el].toComponent())
+  }
+
   render() {
     return (
-      <Html lang="en">
-        <Head>
-          {/* PWA primary color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
-          <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-          />
-        </Head>
-        <body>
+      <Html {...this.helmetHtmlAttrComponents}>
+        <Head>{this.helmetHeadComponents}</Head>
+        <body {...this.helmetBodyAttrComponents}>
           <Main />
+          <ScriptTag src={withPrefix("js/init.js")} />
+          <ScriptTag src={withPrefix("js/page-load.js")} />
+          <ScriptTag src={withPrefix("js/page-unload.js")} />
           <NextScript />
         </body>
       </Html>
@@ -26,45 +49,4 @@ export default class MyDocument extends Document {
   }
 }
 
-// `getInitialProps` belongs to `_document` (instead of `_app`),
-// it's compatible with server-side generation (SSG).
-MyDocument.getInitialProps = async (ctx) => {
-  // Resolution order
-  //
-  // On the server:
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. document.getInitialProps
-  // 4. app.render
-  // 5. page.render
-  // 6. document.render
-  //
-  // On the server with error:
-  // 1. document.getInitialProps
-  // 2. app.render
-  // 3. page.render
-  // 4. document.render
-  //
-  // On the client
-  // 1. app.getInitialProps
-  // 2. page.getInitialProps
-  // 3. app.render
-  // 4. page.render
-
-  // Render app and page and get the context of the page with collected side effects.
-  const sheets = new ServerStyleSheets()
-  const originalRenderPage = ctx.renderPage
-
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => (props) => sheets.collect(<App {...props} />),
-    })
-
-  const initialProps = await Document.getInitialProps(ctx)
-
-  return {
-    ...initialProps,
-    // Styles fragment is rendered after the app and page rendering finish.
-    styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
-  }
-}
+export default MyDocument
