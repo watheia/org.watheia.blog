@@ -48,7 +48,7 @@ export default function Header(props: HeaderProps) {
         <Link href="/contact">
           <Button variant="outlined" size="small">
             Let's Talk
-        </Button>
+          </Button>
         </Link>
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
